@@ -44,7 +44,7 @@ impl Cpu {
 
                 // XOR
                 0b0110 => {
-                    self.reg_file[write as usize] = self.reg_file[read1 as usize] & self.reg_file[read2 as usize];
+                    self.reg_file[write as usize] = self.reg_file[read1 as usize] ^ self.reg_file[read2 as usize];
                 }
 
                 _ => return,
