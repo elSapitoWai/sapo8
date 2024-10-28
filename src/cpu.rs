@@ -18,24 +18,35 @@ impl Cpu {
 
             match opcode {
                 // LDI
-                0b0111 => {
+                0b1000 => {
                     self.reg_file[read1 as usize] = (instruction & 0b0000_0000_1111_1111) as u8;
                 }
 
                 // ADD
-                0b1101 => {
+                0b0010 => {
                     self.reg_file[write as usize] = self.reg_file[read1 as usize].wrapping_add(self.reg_file[read2 as usize]);
                 }
 
                 // SUB
-                0b1100 => {
+                0b0011 => {
                     self.reg_file[write as usize] = self.reg_file[read1 as usize].wrapping_sub(self.reg_file[read2 as usize]);
                 }
 
                 // NOR
-                0b1011 => {
-
+                0b0100 => {
+                    self.reg_file[write as usize] = !(self.reg_file[read1 as usize] | self.reg_file[read2 as usize]);
                 }
+
+                // AND
+                0b0101 => {
+                    self.reg_file[write as usize] = self.reg_file[read1 as usize] & self.reg_file[read2 as usize];
+                }
+
+                // XOR
+                0b0110 => {
+                    self.reg_file[write as usize] = self.reg_file[read1 as usize] & self.reg_file[read2 as usize];
+                }
+
                 _ => return,
             }
 
