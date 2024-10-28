@@ -5,9 +5,9 @@ mod tests {
     #[test]
     fn add_two_integers() {
         let mut instructions = [0; 32];
-        instructions[0] = 0b0111_0001_0000_0011;
-        instructions[1] = 0b0111_0010_0000_0010;
-        instructions[2] = 0b1101_0001_0010_0011;
+        instructions[0] = 0b1000_0001_0000_0011;
+        instructions[1] = 0b1000_0010_0000_0010;
+        instructions[2] = 0b0010_0001_0010_0011;
         let mut cpu = Cpu::new(instructions);
         cpu.run();
         assert_eq!(cpu.reg_file[1], 3);
@@ -18,9 +18,9 @@ mod tests {
     #[test]
     fn add_overflow() {
         let mut instructions = [0; 32];
-        instructions[0] = 0b0111_0001_1111_1111;
-        instructions[1] = 0b0111_0010_0000_0001;
-        instructions[2] = 0b1101_0001_0010_0011;
+        instructions[0] = 0b1000_0001_1111_1111;
+        instructions[1] = 0b1000_0010_0000_0001;
+        instructions[2] = 0b0010_0001_0010_0011;
         let mut cpu = Cpu::new(instructions);
         cpu.run();
         assert_eq!(cpu.reg_file[1], 0b1111_1111);
@@ -31,9 +31,9 @@ mod tests {
     #[test]
     fn sub_two_integers() {
         let mut instructions = [0; 32];
-        instructions[0] = 0b0111_0001_0000_0011;
-        instructions[1] = 0b0111_0010_0000_0010;
-        instructions[2] = 0b1100_0001_0010_0011;
+        instructions[0] = 0b1000_0001_0000_0011;
+        instructions[1] = 0b1000_0010_0000_0010;
+        instructions[2] = 0b0011_0001_0010_0011;
         let mut cpu = Cpu::new(instructions);
         cpu.run();
         assert_eq!(cpu.reg_file[1], 3);
@@ -44,9 +44,9 @@ mod tests {
     #[test]
     fn sub_overflow() {
         let mut instructions = [0; 32];
-        instructions[0] = 0b0111_0001_0000_0000;
-        instructions[1] = 0b0111_0010_0000_0001;
-        instructions[2] = 0b1100_0001_0010_0011;
+        instructions[0] = 0b1000_0001_0000_0000;
+        instructions[1] = 0b1000_0010_0000_0001;
+        instructions[2] = 0b0011_0001_0010_0011;
         let mut cpu = Cpu::new(instructions);
         cpu.run();
         assert_eq!(cpu.reg_file[1], 0);
