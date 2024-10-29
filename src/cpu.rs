@@ -12,39 +12,44 @@ impl Cpu {
 
             let opcode = instruction >> 12;
 
-            let read1 = (instruction & 0b0000_1111_0000_0000) >> 8;
-            let read2= (instruction & 0b0000_0000_1111_0000) >> 4;
-            let write= instruction & 0b0000_0000_0000_1111;
+            let read1 = ((instruction & 0b0000_1111_0000_0000) >> 8) as usize;
+            let read2= ((instruction & 0b0000_0000_1111_0000) >> 4) as usize;
+            let write= (instruction & 0b0000_0000_0000_1111) as usize;
 
             match opcode {
                 // LDI
                 0b1000 => {
-                    self.reg_file[read1 as usize] = (instruction & 0b0000_0000_1111_1111) as u8;
+                    self.reg_file[read1] = (instruction & 0b0000_0000_1111_1111) as u8;
                 }
 
                 // ADD
                 0b0010 => {
-                    self.reg_file[write as usize] = self.reg_file[read1 as usize].wrapping_add(self.reg_file[read2 as usize]);
+                    self.reg_file[write] = self.reg_file[read1].wrapping_add(self.reg_file[read2]);
                 }
 
                 // SUB
                 0b0011 => {
-                    self.reg_file[write as usize] = self.reg_file[read1 as usize].wrapping_sub(self.reg_file[read2 as usize]);
+                    self.reg_file[write] = self.reg_file[read1].wrapping_sub(self.reg_file[read2]);
                 }
 
                 // NOR
                 0b0100 => {
-                    self.reg_file[write as usize] = !(self.reg_file[read1 as usize] | self.reg_file[read2 as usize]);
+                    self.reg_file[write] = !(self.reg_file[read1] | self.reg_file[read2]);
                 }
 
                 // AND
                 0b0101 => {
-                    self.reg_file[write as usize] = self.reg_file[read1 as usize] & self.reg_file[read2 as usize];
+                    self.reg_file[write] = self.reg_file[read1] & self.reg_file[read2];
                 }
 
                 // XOR
                 0b0110 => {
-                    self.reg_file[write as usize] = self.reg_file[read1 as usize] ^ self.reg_file[read2 as usize];
+                    self.reg_file[write] = self.reg_file[read1] ^ self.reg_file[read2];
+                }
+
+                // RSH
+                0b0111 => {
+                    self.reg_file[write] = self.reg_file[read1] >> 1;
                 }
 
                 _ => return,
