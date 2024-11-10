@@ -17,6 +17,11 @@ impl Cpu {
             let write= (instruction & 0b0000_0000_0000_1111) as usize;
 
             match opcode {
+                // HLT
+                0b0001 {
+                    return;
+                }
+
                 // LDI
                 0b1000 => {
                     self.reg_file[read1] = (instruction & 0b0000_0000_1111_1111) as u8;
